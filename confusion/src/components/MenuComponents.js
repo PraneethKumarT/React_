@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap'
+import { Card, CardImg, CardImgOverlay,CardTitle } from 'reactstrap'
 
     function RenderMenuItem({dish, onClick}){
         return(
@@ -16,7 +16,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 're
     const Menu = (props) => {
         const menu = props.dishes.map((dish) => {
             return (
-                <div key={dish.id} className = "col-12 col-md-5 mt-5">
+                <div className = "col-12 col-md-5 mt-5 key={dish.id}">
                    <RenderMenuItem dish = {dish} onClick={props.onClick} />
                 </div>
               );
