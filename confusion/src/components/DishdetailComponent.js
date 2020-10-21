@@ -26,8 +26,8 @@ class CommentForm extends Component{
     }
 
     handleSubmit(values){
-        console.log("Current state is : "+JSON.stringify(values))
-        alert("Current state is : "+JSON.stringify(values))
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)
     }
 
     render(){
@@ -51,8 +51,8 @@ class CommentForm extends Component{
                                         </Control.select>
                                 </Col>
                                 <Col className="form-group">
-                                    <Label htmlFor = "name" >Your Name</Label>
-                                        <Control.text model=".name" id = "name" name = "name"
+                                    <Label htmlFor = "author" >Your Name</Label>
+                                        <Control.text model=".author" id = "author" name = "author"
                                          placeholder="Your Name"
                                          className="form-control"
                                          validators = {{
@@ -90,7 +90,7 @@ class CommentForm extends Component{
 
 }
 
-    function RenderComments({comments}){
+    function RenderComments({comments, addComment, dishId}){
         const commentss = comments.map(comment => {
             return (
                 <li key = {comment.id} >
@@ -113,7 +113,7 @@ class CommentForm extends Component{
                 </h4>
                 <ul className='list-unstyled'>
                     {commentss}
-                    <CommentForm/>
+                    <CommentForm dishId = {dishId} addComment = {addComment}/>
 
                     
                 </ul>
@@ -150,7 +150,9 @@ class CommentForm extends Component{
         if (dish == null)
             return (<div></div>)
         const id = <RenderDish dish = {props.dish} />
-        const commentDish = <RenderComments comments = {props.comments} />
+        const commentDish = <RenderComments comments = {props.comments} 
+                             addComment = {props.addComment}
+                             dishId={props.dish.id}/>
         return(
             <div className = "container">
                 <div className = "row" >
