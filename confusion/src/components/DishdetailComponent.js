@@ -3,6 +3,7 @@ import { Card, CardImg, CardText, CardBody, Row, Col,
     ModalBody, Modal, ModalHeader, CardTitle, Breadcrumb, BreadcrumbItem, Button, Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import {Control, LocalForm, Errors} from 'react-redux-form';
+import {Loading} from './LoadingComponent'
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len)
 const minLength = (len) => (val) => (val) && (val.length >= len)
@@ -31,7 +32,7 @@ class CommentForm extends Component{
     }
 
     render(){
-        return(
+        return( 
             <div>
                 <Button className = "fa fa-edit fa-lg" onClick = {this.toggleModal}  >Submit Comment</Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
@@ -147,9 +148,28 @@ class CommentForm extends Component{
 
     const DishDetail = (props) => {
         const dish = props.dish
-        if (dish == null)
+        if (props.isLoading) {
+            return(
+                <div className = "container">
+                    <div className = "row">
+                        <Loading/>
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMess) {
+            return(
+                <div className = "container">
+                    <div className = "row">
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (dish == null)
             return (<div></div>)
-        const id = <RenderDish dish = {props.dish} />
+        else {
+            const id = <RenderDish dish = {props.dish} />
         const commentDish = <RenderComments comments = {props.comments} 
                              addComment = {props.addComment}
                              dishId={props.dish.id}/>
@@ -169,5 +189,6 @@ class CommentForm extends Component{
                 </div>
             </div>
         )
+        }  
     }
 export default DishDetail;
