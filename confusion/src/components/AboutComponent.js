@@ -1,16 +1,15 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
-
-
+import {baseUrl} from '../shared/baseUrl';
+import {  Stagger } from 'react-animation-components';
 
 function RenderLeader({item}){
     return(
         <div className="col-md-12 mt-5">
             <Media>
                  <Media left middle>
-                    <Media object src={item.image} alt = {item.name} />
+                    <Media object src={baseUrl + item.image} alt = {item.name} />
                  </Media>
                  <Media body className="ml-5">
                     <Media heading>{item.name}</Media>
@@ -23,15 +22,15 @@ function RenderLeader({item}){
 }
 
 function About(props) {
-
-    const leaders = props.leaders.map((leader) => {
+   const leaders = props.leaders.map((leader) => {
         return (
             <div className = "col-12 col-md-12 m-1">
+                <Stagger in>
                 <RenderLeader item = {leader} />
+                </Stagger>
             </div>
         );
     });
-
     return(
         <div className="container">
             <div className="row">
